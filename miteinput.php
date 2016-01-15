@@ -1,13 +1,20 @@
 <?php
+
+	$user = "doubled_DB";
+	$pass = "Thoud0n0tKnow";
 	try
 	{
-		$con = new PDO("mysql: host=localhost; dbname=doubled_bee_database", $username, $password);
+		$con = new PDO("mysql: host=localhost; dbname=doubled_bee_database", $user, $pass);
 	}
 	catch (PDOException $ex)
 	{
 		echo 'Error connecting to database: ' . $ex->getMessage();
 	}
-
+	
+	require 'Models/mite_sample_model.php';
+	
+	$model = new Mite_Sample_Model($con);
+	
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 ?>
@@ -21,21 +28,7 @@
 	<?php
 		if (isset($_POST['submit']))
 		{
-			$sql = "INSERT INTO mite_sample (hive_id, date_collected, sample_period, mite_count)
-				VALUES (:id, :date, :days, :count)";
-				
-			$prepared = $con->prepare($sql);
-			
-			$prepared->bindParam(':id', $_POST['hiveid'], PDO::PARAM_STR);
-			$prepared->bindParam(':date', $_POST['date'], PDO::PARAM_STR);
-			$prepared->bindParam(':days', $_POST['days'], PDO::PARAM_INT);
-			$prepared->bindParam(':count', $_POST['count'], PDO::PARAM_INT);
-			
-			$result = $prepared->execute();
-			if ($result)
-			{
-				echo 'ConGRADulations! you have submitted data.';
-			}
+			$model->insertdata($con, $_POST['hiveid'], $_POST['date'], $_POST['days'], $_POST['count']);
 		}
 	?>
 	<body>
@@ -48,3 +41,7 @@
 		</form>
 	</body>
 </html>
+
+<?php
+	$con = null;
+?>
