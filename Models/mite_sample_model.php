@@ -27,5 +27,16 @@
 				echo "ConGRADulations!Data input successfully!";
 			}
         }
+		
+		public function retrieveall($con)
+		{
+			$sql = "SELECT * FROM mite_sample";
+			
+			$prepared = $con->prepare($sql);
+			
+			$result = $prepared->query();
+			
+			return $result;
+		}
     }
 ?>
