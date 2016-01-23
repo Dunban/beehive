@@ -24,7 +24,7 @@
 			
 			if($result)
 			{
-				echo "ConGRADulations!Data input successfully!";
+				echo "ConGRADulations! Data input successfully!";
 			}
         }
 		
@@ -32,9 +32,7 @@
 		{
 			$sql = "SELECT * FROM mite_sample";
 			
-			$prepared = $con->prepare($sql);
-			
-			$result = $prepared->query();
+			$result = $con->query($sql);
 			
 			return $result;
 		}
